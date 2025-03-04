@@ -54,10 +54,23 @@ void connectionHandler(void *parameter, CS104_Connection connection, CS104_Conne
     }
 }
 
-bool asduReceivedHandler(void *parameter, int _address, CS101_ASDU asdu) {
-    if (const int cot = CS101_ASDU_getCOT(asdu); cot == CS101_COT_ACTIVATION_CON) {
-        std::cout << "Control command confirmed by RTU" << std::endl;
-        commandConfirmed = true;
+bool asduReceivedHandler(void *parameter, int address, CS101_ASDU asdu) {
+    const int numberOfASDUElements = CS101_ASDU_getNumberOfElements(asdu);
+
+    switch (CS101_ASDU_getCOT(asdu)) {
+        case CS101_COT_ACTIVATION_CON:
+            commandConfirmed = true;
+            std::cout << "Control command confirmed by RTU" << std::endl;
+            break;
+        case CS101_COT_UNKNOWN_IOA:
+            commandConfirmed = true;
+            for (auto i = 0; i < numberOfASDUElements; i++) {
+                const auto io = CS101_ASDU_getElement(asdu, i);
+                std::cerr << "Control command error: unknown IOA " << std::to_string(InformationObject_getObjectAddress(io)) << std::endl;
+                InformationObject_destroy(io);
+            }
+            break;
+        default: ;
     }
     return true;
 }
@@ -138,7 +151,7 @@ int main(const int argc, char *argv[]) {
         break;
 
         default:
-            std::cerr << "Invalid ASDU type" + std::to_string(asdu) + " Use 45 for single command, 46 for double command" << std::endl;
+            std::cerr << "Invalid ASDU " + std::to_string(asdu) + " Use 45 for single command, 46 for double command" << std::endl;
     }
 
     if (!waitForCondition(commandConfirmed, 5000)) {
