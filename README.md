@@ -15,14 +15,14 @@ Control commands must be confirmed by the RTU before they take effect, ensuring 
 ## Installation
 ### Prerequisites
 - C++17 or later
-- [lib60870 library](https://github.com/mz-automation/lib60870)
+- [lib60870](https://github.com/mz-automation/lib60870)
 - CMake or a compatible build system
 
 ### Building the Program
 ```sh
 mkdir vendor
 ```
-Copy [lib60870 library](https://github.com/mz-automation/lib60870)/lib60870-C to the directory `vendor`
+Copy [lib60870](https://github.com/mz-automation/lib60870)/lib60870-C to the directory `vendor`
 
 ```sh
 mkdir build && cd build
