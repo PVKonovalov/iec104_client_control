@@ -1,0 +1,1 @@
+Put `lib60870-C` directory from lib60870 to this place.

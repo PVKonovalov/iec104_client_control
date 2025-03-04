@@ -33,5 +33,5 @@
 .idea/
 cmake-build-debug/
 build/
-vendor/
+vendor/*
 !vendor/README.md
