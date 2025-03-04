@@ -75,7 +75,7 @@ bool asduReceivedHandler(void *parameter, int address, CS101_ASDU asdu) {
     return true;
 }
 
-bool waitForCondition(std::atomic<bool> &condition, int timeoutMs) {
+bool waitForCondition(const std::atomic<bool> &condition, const int timeoutMs) {
     const auto start = std::chrono::steady_clock::now();
     while (!condition) {
         if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() > timeoutMs) {
