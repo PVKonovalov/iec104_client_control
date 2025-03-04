@@ -34,3 +34,4 @@
 cmake-build-debug/
 build/
 vendor/
+!vendor/README.md
