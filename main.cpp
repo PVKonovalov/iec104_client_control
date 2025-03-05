@@ -31,7 +31,7 @@ std::atomic startDTConfirmed(false);
 
 void signalHandler(const int signum) {
     std::cout << "Interrupt signal (" << signum << ") received. Exiting.." << std::endl;
-    exit(signum);
+    exit(128 + signum);
 }
 
 void connectionHandler(void *parameter, CS104_Connection connection, CS104_ConnectionEvent event) {
